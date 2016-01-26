@@ -31,7 +31,7 @@ from keras.regularizers import l2, activity_l2, l1
 from keras import backend as K
 
 # Isaac Gerg
-# Mimicked from https://github.com/mikesj-public/convolutional_autoencoder/blob/master/mnist_conv_autoencode.ipynb
+# Adapted from https://github.com/mikesj-public/convolutional_autoencoder/blob/master/mnist_conv_autoencode.ipynb
 
 # Not my function, I can't recall who this is from.  If this belongs to you, please let me know.
 def make_mosaic(imgs, nrows, ncols, border=1):
@@ -54,9 +54,6 @@ def make_mosaic(imgs, nrows, ncols, border=1):
 
         mosaic[row * paddedh:row * paddedh + imshape[0], col * paddedw:col * paddedw + imshape[1]] = imgs[i].reshape(imshape)
     return mosaic
-
-#from mpl_toolkits.axes_grid1 import make_axes_locatable
-
 
 def isSquare(n):
     tmp = np.sqrt(n)
@@ -179,12 +176,12 @@ def mnistCae():
     #-----------------------------------------------------------------------------------------------
     # Params
     batch_size = 128
-    nb_epoch = 10
+    nb_epoch = 20
     conv_num_filters = 16
     filter_size = 3
     pool_size = 2
     encode_size = 16
-    dense_mid_size = 128    
+    dense_mid_size = 64    
     #-----------------------------------------------------------------------------------------------
 
     # input image dimensions
@@ -205,7 +202,7 @@ def mnistCae():
         
     # Build the model
     model = Sequential()
-    act = 'sigmoid'
+    act = 'relu'
     model.add(Convolution2D(conv_num_filters, filter_size, filter_size, border_mode='valid', activation=act, input_shape=(1, img_rows, img_cols)))
     model.add(Convolution2D(conv_num_filters, filter_size, filter_size, border_mode='valid', activation=act))
     model.add(MaxPooling2D(pool_size=(pool_size, pool_size)))
