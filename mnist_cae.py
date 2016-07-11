@@ -15,8 +15,6 @@ import matplotlib.cm
 
 from keras.datasets import mnist
 from keras.models import Sequential
-from keras.layers import containers
-from keras.layers.core import Dense, AutoEncoder, Dropout, MaxoutDense
 from keras.layers.noise import GaussianNoise
 from keras.activations import sigmoid
 from keras.utils import np_utils
@@ -24,7 +22,7 @@ from keras.optimizers import SGD
 from keras.layers import noise
 import keras.models as models
 from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D, UpSampling2D
-from keras.layers.core import Layer, Dense, Dropout, Activation, Flatten, Reshape, AutoEncoder, Merge
+from keras.layers.core import Layer, Dense, Dropout, Activation, Flatten, Reshape, Merge
 from keras.utils.visualize_util import plot
 import keras.callbacks
 from keras.regularizers import l2, activity_l2, l1
@@ -231,13 +229,13 @@ def mnistCae():
     # Show graph of model
     outputDir = datetime.datetime.now().strftime("%A, %d. %B %Y %I.%M%p")
     os.mkdir(outputDir)    
-    import keras.utils.visualize_util as vutil
-    t = vutil.to_graph(model, recursive=True, show_shape=True).create(prog='dot', format="png")
-    fid = open(os.path.join(outputDir, 'graph.png'), 'wb'); fid.write(t); fid.close()    
+#    import keras.utils.visualize_util as vutil
+#    t = vutil.to_graph(model, recursive=True, show_shape=True).create(prog='dot', format="png")
+#    fid = open(os.path.join(outputDir, 'graph.png'), 'wb'); fid.write(t); fid.close()    
     history = LossHistory(outputDir)
     
     # Train up model
-    model.fit(X_train, X_train, batch_size=batch_size, nb_epoch=nb_epoch, show_accuracy=True, verbose=2, validation_split=0.1, callbacks=[history])
+    model.fit(X_train, X_train, batch_size=batch_size, nb_epoch=nb_epoch, , verbose=2, validation_split=0.1, callbacks=[history])
     
     # Show examples of reconstruction
     for k in np.random.randint(0, 1000, size=10):
